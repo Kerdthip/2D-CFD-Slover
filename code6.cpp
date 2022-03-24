@@ -1,3 +1,5 @@
+//Wrong B.C.
+
 //Refference: momentum equation, continuity equation (page33, equa: 3.29)
 //use gauss seidel iteration to solve Pressure
 //Use Runge-Kutta to solve for u and v
