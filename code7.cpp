@@ -1,3 +1,5 @@
+//Complete without Passive Scalar
+
 //solve momentum equation with no pressure in x-axis or F (page33-3.29)
 //explicit euler in term t && central finite different interm dimention
 //use gauss seidel iteration for solve Pressure
