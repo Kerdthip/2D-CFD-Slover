@@ -1,6 +1,3 @@
-
-
-
 #include <iostream>
 #include <cmath>
 #include <fstream>
@@ -109,15 +106,6 @@ void simulation_FG(double **u, double **u_new, double **v, double **v_new, doubl
       RHS_F = RHS_F1  - RHS_F3 -RHS_F2;
       F[i][j] = u[i][j] + dt*RHS_F;
       
-      //equation for high Re number
-      // gamma= fmax(abs(u[i][j]*dt/dx),abs(v[i][j]*dt/dy));
-//       RHS_F1= (u[i+1][j] - 2*u[i][j] + u[i-1][j])/pow(dx,2);
-//       RHS_F2= (u[i][j+1] - 2*u[i][j] + u[i][j-1])/pow(dy,2);
-//       RHS_F3= (pow((u[i+1][j] + u[i][j])/2,2) -pow((u[i][j]+ u[i-1][j])/2,2))/dx +(gamma/dx)*((abs(u[i][j]+u[i+1][j])*(u[i][j]-u[i+1][j]))/4-(abs(u[i-1][j]+u[i][j])*(u[i-1][j]-u[i][j]))/4);
-//       RHS_F= ((v[i][j]+v[i+1][j])*(u[i][j]+u[i][j+1])/4-((v[i][j-1]+v[i+1][j-1])*(u[i][j-1]+u[i][j]))/4)/dy+(gamma/dy)*((abs(v[i][j]+v[i+1][j])*(u[i][j]-u[i][j+1]))/4-(abs(v[i][j-1]+v[i+1][j-1])* \
-// (u[i][j-1]-u[i][j]))/4);
-//       F[i][j]=u[i][j]+dt*((RHS_F1+RHS_F2)/Re-(RHS_F3)-(RHS_F));
-      
     }
   }
   
@@ -125,20 +113,11 @@ void simulation_FG(double **u, double **u_new, double **v, double **v_new, doubl
   for(int i=1; i<=nx-2; i++){
     for(int j =1; j<=ny-3; j++){
       RHS_G1 = (((v[i+1][j]-2*v[i][j]+v[i-1][j])/pow(dx,2.))+((v[i][j+1]-2*v[i][j]+v[i][j-1])/pow(dy,2.)))/Re;
-      //RHS_G1 = (((v[i+1][j]+2*v[i][j]+v[i-1][j])/pow(dx,2.)))/Re;
-
       RHS_G3 = (pow(((v[i][j]+v[i][j+1])/2),2.)-pow(((v[i][j-1]+v[i][j])/2),2.))/dy;
       RHS_G2 = (((u[i][j]+u[i][j+1])/2)*((v[i][j]+v[i+1][j])/2)-((u[i-1][j]+u[i-1][j+1])/2)*((v[i-1][j]+v[i][j])/2))/dx;
       RHS_G = RHS_G1 - RHS_G2 - RHS_G3;
       G[i][j] = v[i][j] + dt*RHS_G;
       
-      //equation for high Re number
-      // gamma= fmax(abs(u[i][j]*dt/dx),abs(v[i][j]*dt/dy));
-      // RHS_G1= (v[i+1][j] - 2*v[i][j] + v[i-1][j])/pow(dx,2);
-      // RHS_G2= (v[i][j+1] - 2*v[i][j] + v[i][j-1])/pow(dy,2);
-      // RHS_G3= (pow((v[i][j+1] + v[i][j])/2,2) -pow((v[i][j]+ v[i][j-1])/2,2))/dy +(gamma/dy)*((abs(v[i][j]+v[i][j+1])*(v[i][j]-v[i][j+1]))/4-(abs(v[i][j-1]+v[i][j])*(v[i][j-1]-v[i][j]))/4);
-      // RHS_G= ((u[i][j]+u[i][j+1])*(v[i][j]+v[i+1][j])/4-((u[i-1][j]+u[i-1][j+1])*(v[i-1][j]+v[i][j]))/4)/dx+(gamma/dx)*((abs(u[i][j]+u[i][j+1])*(v[i][j]-v[i+1][j]))/4-(abs(u[i-1][j]+u[i-1][j+1])*(v[i-1][j]-v[i][j]))/4);
-      //       G[i][j]=v[i][j]+dt*((RHS_G1+RHS_G2)/Re-(RHS_G3)-(RHS_G));
     }
   }
 
@@ -168,8 +147,7 @@ void simulation_p(double **u, double **u_new, double **v, double **v_new, double
   bool status = true;
   aa = 1./pow(dx,2.);
   bb = 1./pow(dy,2.);
-  //cc = (pow(dx,2.)*pow(dy,2.))/(2*(pow(dx,2.)+pow(dy,2.)));
-
+	
   double w=1.;
   double rit=1.;
   double eps=0.01;
