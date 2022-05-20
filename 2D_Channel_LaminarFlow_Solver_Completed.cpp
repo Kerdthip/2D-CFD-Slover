@@ -139,7 +139,7 @@ void simulation_FG(double **u, double **u_new, double **v, double **v_new, doubl
 }
 
 
-//step 2 find P[i,j] use explicit euler and central finite different !! gauss seidel iteration
+//step 2 find P[i,j] : Solving Poisson equation using gauss seidel iteration
 void simulation_p(double **u, double **u_new, double **v, double **v_new, double **F, double **G, double **P, double **P_new, int nx, int ny, double Re, double dx, double dy, double dt){
   double aa, bb, cc;
   double ee, ew, en, es;
@@ -190,7 +190,7 @@ void simulation_p(double **u, double **u_new, double **v, double **v_new, double
 	status = false;
       }
     }
-    //cal rit
+    
     rit=sqrt(rit/((nx-2)*(ny-2)));
 
     //check convergence
@@ -259,6 +259,7 @@ void simulation_uv(double **u, double **u_new, double **v, double **v_new, doubl
  
 }
 
+//find passive scalar using explicit euler
 void simulation_passiveScalar(double **u, double **u_new, double **v, double **v_new, double **F, double **G, double **P, double **P_new, double **Phi, double **Phi_new, int nx, int ny, double Re, double dx, double dy, double dt){
   for(int i = 1; i <= nx-3; i++){
     for(int j = 1; j <= ny-3; j++){    
@@ -319,11 +320,11 @@ void paraview(string fileName, double **var, int nx, int ny, double dx, double d
 
 int main(){
 
-  int nx = 100;
-  int ny = 50;
+  int nx = 200;
+  int ny = 80;
   int nn = 0;
   double Re = 300.;
-  double dx = 10./real(ny-2);
+  double dx = 4./real(ny-2);
   double dy = 1./real(ny-2);
   double dt = 0.01;
   string fileName;
@@ -389,7 +390,7 @@ int main(){
 
   initialize(u,u_new,v,v_new,F,G,P,P_new,Phi,Phi_new,nx,ny);
   
-  for(int n=1;n<=2000;n++){
+  for(int n=1;n<=10000;n++){
     
     simulation_FG(u, u_new, v, v_new, F, G, nx, ny, Re, dx, dy, dt);
     simulation_p(u, u_new, v, v_new, F, G, P, P_new, nx, ny, Re, dx, dy, dt);
@@ -412,20 +413,19 @@ int main(){
       paraview(fileName, v, nx, ny-1, dx, dy);
       fileName = "p_" + to_string(n) + ".vtk";
       paraview(fileName, P, nx, ny, dx, dy);
-  //}
-  //}
-  visualize(F,nx-1,ny);
-  visualize(G,nx,ny-1);
-  visualize(u,nx-1,ny);
-  visualize(v,nx,ny-1);
-  visualize(u_new,nx-1,ny);
-  visualize(v_new,nx,ny-1);
-  visualize(P,nx,ny);
-  visualize(P_new,nx,ny);
-  visualize(Phi,nx-1,ny-1);
-  visualize(Phi_new,nx-1,ny-1);
+  
+  //visualize(F,nx-1,ny);
+  //visualize(G,nx,ny-1);
+  //visualize(u,nx-1,ny);
+  //visualize(v,nx,ny-1);
+  //visualize(u_new,nx-1,ny);
+  //visualize(v_new,nx,ny-1);
+  //visualize(P,nx,ny);
+  //visualize(P_new,nx,ny);
+  //visualize(Phi,nx-1,ny-1);
+  //visualize(Phi_new,nx-1,ny-1);
   }
-  }
+ }
   
   
   
